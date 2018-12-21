@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Net;
@@ -93,10 +94,11 @@ namespace Worker
             Console.Error.WriteLine("Connected to db");
 
             var command = connection.CreateCommand();
-            command.CommandText = @"CREATE TABLE IF NOT EXISTS votes (
-                                        id VARCHAR(255) NOT NULL UNIQUE,
-                                        vote VARCHAR(255) NOT NULL
-                                    )";
+	    command.CommandText = "DROP TABLE votes";
+	    command.ExecuteNonQuery();
+	    command.CommandText = "CREATE TABLE IF NOT EXISTS votes (id VARCHAR(255) NOT NULL, vote text NOT NULL)";
+            /*command.CommandText = "CREATE TABLE IF NOT EXISTS votes (id VARCHAR(255) NOT NULL, \"ARMIN VAN BUUREN\" VARCHAR(255), \"AXWELL ^ INGROSSO\" VARCHAR(255), \"HARDWELL\" VARCHAR(255), \"JOHN NEWMAN\" VARCHAR(255), \"STEVE ANGELLO\" VARCHAR(255), \"STEVE AOKI\" VARCHAR(255), \"THE SCRIPT\" VARCHAR(255), \"ALAN WALKER\" VARCHAR(255), \"GALANTIS\" VARCHAR(255), \"GTA\" VARCHAR(255), \"JONAS BLUE\" VARCHAR(255), \"KUNGS\" VARCHAR(255), \"REDFOO\" VARCHAR(255), \"SCOOTER\" VARCHAR(255), \"SUBCARPATI\" VARCHAR(255), \"SUNNERY JAMES & RYAN MARCIANO\" VARCHAR(255), \"TUJAMO\" VARCHAR(255), \"W&W\" VARCHAR(255), \"YELLOW CLAW\" VARCHAR(255), \"JAMIE JONES\" VARCHAR(255), \"NINA KRAVIZ\" VARCHAR(255), \"AME DJ\" VARCHAR(255), \"CEZAR\" VARCHAR(255), \"EATS EVERYTHING\" VARCHAR(255), \"PRASLEA\" VARCHAR(255), \"PRIKU\" VARCHAR(255), \"RARESH\" VARCHAR(255), \"SIT\" VARCHAR(255), \"CHARLIE\" VARCHAR(255), \"DAN ANDREI\" VARCHAR(255), \"EMI\" VARCHAR(255), \"KOZO\" VARCHAR(255), \"LUCY\" VARCHAR(255), \"MUMDANCE\" VARCHAR(255), \"PAUL AGRIPA\" VARCHAR(255), \"PREMIESKU\" VARCHAR(255), \"SUBLEE\" VARCHAR(255), \"VINCENTIULIAN\" VARCHAR(255), \"CAMO & KROOKED\" VARCHAR(255), \"CHASE & STATUS\" VARCHAR(255), \"DJ PREMIER\" VARCHAR(255), \"DOPE D.O.D\" VARCHAR(255), \"DUB FX\" VARCHAR(255), \"MODESTEP\" VARCHAR(255), \"NGHTMRE\" VARCHAR(255), \"NOISIA\" VARCHAR(255), \"PENDULUM\" VARCHAR(255), \"RUSKO\" VARCHAR(255), \"CULESE DIN CARTIER\" VARCHAR(255), \"DOC\" VARCHAR(255), \"DELIRIC & SILENT STRIKE\" VARCHAR(255), \"GRASU XXL\" VARCHAR(255), \"MACANACHE\" VARCHAR(255), \"PARAZITII\" VARCHAR(255), \"SATRA B.E.N.Z.\" VARCHAR(255), \"ACID PAULI\" VARCHAR(255), \"BEGUN\" VARCHAR(255), \"BLACK COFFEE\" VARCHAR(255), \"BLOND:ISH\" VARCHAR(255), \"CHRISTIAN LOFLER\" VARCHAR(255), \"CLAPTONE\" VARCHAR(255), \"EL MUNDO\" VARCHAR(255), \"HOLMAR\" VARCHAR(255), \"JAN BLOMQVIST & BAND\" VARCHAR(255), \"KERALA DUST\" VARCHAR(255), \"LUM\" VARCHAR(255), \"MARWAN\" VARCHAR(255), \"NIGHTMARES ON WAX\" VARCHAR(255), \"NU\" VARCHAR(255), \"RAMPUE\" VARCHAR(255), \"SATORI\" VARCHAR(255), \"STAVROZ\" VARCHAR(255), \"VIKEN ARMAN\" VARCHAR(255), \"YOKOO\" VARCHAR(255))";*/
+	    /*command.CommandText = "DROP TABLE votes";*/
             command.ExecuteNonQuery();
 
             return connection;
@@ -132,21 +134,44 @@ namespace Worker
 
         private static void UpdateVote(NpgsqlConnection connection, string voterId, string vote)
         {
+	    List<string> votes = vote.Split(',').ToList<string>();
             var command = connection.CreateCommand();
             try
             {
+		command.Parameters.AddWithValue("@id", voterId);
+		command.Parameters.AddWithValue("@vote", vote);
                 command.CommandText = "INSERT INTO votes (id, vote) VALUES (@id, @vote)";
-                command.Parameters.AddWithValue("@id", voterId);
-                command.Parameters.AddWithValue("@vote", vote);
                 command.ExecuteNonQuery();
+		// INSEREAZA-LE PE TOATE DIRECT
+		/*string columns = "(id";
+		string values = "(@id";
+		foreach (string v in votes) {
+			columns = columns + ", " + "\"" + v + "\"";
+			values = values + ", " + "'" + v + "'";
+		}
+		columns = columns + ")";
+		values = values + ")";
+		command.CommandText = $"INSERT INTO votes {columns} VALUES {values}";
+		command.ExecuteNonQuery();*/
             }
             catch (DbException)
             {
-                command.CommandText = "UPDATE votes SET vote = @vote WHERE id = @id";
-                command.ExecuteNonQuery();
+		// SETEAZA TOT PE NULL
+                /*command.CommandText = "UPDATE votes SET vote = @vote WHERE id = @id";
+                command.ExecuteNonQuery();*/
+		Console.WriteLine("ERROOOOOOOOOOOOOOOOOOOOOOOOOOOR");
             }
             finally
             {
+		/*foreach (string v in votes) {
+			Console.WriteLine(v);
+			string x = "\"" + v + "\"";
+			Console.WriteLine(x);
+			command.CommandText = $"UPDATE votes SET {x} = {x} WHERE id = {voterId}";
+			Console.WriteLine(command.CommandText);
+                	command.ExecuteNonQuery();
+		}
+		Console.WriteLine("Finished updating");*/
                 command.Dispose();
             }
         }

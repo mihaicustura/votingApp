@@ -9,6 +9,11 @@ html,body{
   background-color: #F7F8F9;
   height: 100vh;
   font-family: 'Open Sans';
+  background-image: url('neversea.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
 }
 
 button{
@@ -35,6 +40,14 @@ button.b{
   background-color: #00cbca;
 }
 
+button.c{
+  background-color: #00cbca;
+}
+
+input.a{
+  background-color: red;
+}
+
 #tip{
   text-align: left;
   color: #c0c9ce;
@@ -42,7 +55,7 @@ button.b{
 }
 
 #hostname{
-  position: absolute;
+  /*position: absolute;*/
   bottom: 100px;
   right: 0;
   left: 0;
@@ -56,7 +69,7 @@ button.b{
   margin: 0 auto;
   display: table;
   padding: 10px;
-  max-width: 940px;
+  /*max-width: 940px;*/
   height: 100%;
 }
 #content-container-center{
@@ -71,20 +84,20 @@ button.b{
 #choice{
   transition: all 300ms linear;
   line-height: 1.3em;
-  display: inline;
+  display: inline-block;
   vertical-align: middle;
   font-size: 3em;
 }
 #choice a{
   text-decoration:none;
 }
-#choice a:hover, #choice a:focus{
+#choice a:hover, .choice a:focus{
   outline:0;
   text-decoration:underline;
 }
 
 #choice button{
-  display: block;
+  
   height: 80px;
   width: 330px;
   border: none;
@@ -106,11 +119,19 @@ button.b{
   background-color: #00a2a1;
 }
 
+#choice button.c:hover{
+  background-color: #00a2a1;
+}
+
 #choice button.a:focus{
   background-color: #1488c6;
 }
 
 #choice button.b:focus{
+  background-color: #00a2a1;
+}
+
+#choice button.c:focus{
   background-color: #00a2a1;
 }
 
@@ -126,4 +147,156 @@ button.b{
   margin-bottom:-4px;
   width:50%;
   height:100%;
+}
+
+
+
+
+
+
+.ck-button1 {
+    margin:4px;
+    background-color:#1aaaf8;
+    overflow:auto;
+    float:left;
+
+  height: 63px;
+  width: 330px;
+  color: black;
+  border: none;
+  text-transform: uppercase;
+  font-size:18px;
+  font-weight: 700;
+  text-align: left;
+  opacity: 0.3;
+}
+
+.ck-button1 label {
+    float:left;
+    /*width:12.0em;*/
+    width: 100%;
+}
+
+.ck-button1 label span {
+    text-align:center;
+    display:block;
+}
+
+.ck-button1 label input {
+    display: none;
+}
+
+.ck-button1 input:checked + span {
+    background-color:#1488c6;
+}
+
+
+.ck-button2 {
+    margin:4px;
+    background-color:#00cbca;
+    overflow:auto;
+    float:left;
+
+  height: 63px;
+  width: 330px;
+  color: black;
+  border: none;
+  text-transform: uppercase;
+  font-size:18px;
+  font-weight: 700;
+  text-align: left;
+  opacity: 0.3;
+}
+
+.ck-button2 label {
+    float:left;
+    /*width:12.0em;*/
+    width: 100%;
+}
+
+.ck-button2 label span {
+    text-align:center;
+    display:block;
+}
+
+.ck-button2 label input {
+    display: none;
+}
+
+.ck-button2 input:checked + span {
+    background-color:#00a2a1;
+}
+
+
+.ck-button3 {
+    margin:4px;
+    background-color:#2E8B57;
+    overflow:auto;
+    float:left;
+
+  height: 63px;
+  width: 330px;
+  color: black;
+  border: none;
+  text-transform: uppercase;
+  font-size:18px;
+  font-weight: 700;
+  text-align: left;
+  opacity: 0.3;
+}
+
+.ck-button3 label {
+    float:left;
+    /*width:12.0em;*/
+    width: 100%;
+}
+
+.ck-button3 label span {
+    text-align:center;
+    display:block;
+}
+
+.ck-button3 label input {
+    display: none;
+}
+
+.ck-button3 input:checked + span {
+    background-color:#8FBC8F;
+}
+
+
+.ck-button4 {
+    margin:4px;
+    background-color:#F4A460;
+    overflow:auto;
+    float:left;
+
+  height: 63px;
+  width: 330px;
+  color: black;
+  border: none;
+  text-transform: uppercase;
+  font-size:18px;
+  font-weight: 700;
+  text-align: left;
+  opacity: 0.3;
+}
+
+.ck-button4 label {
+    float:left;
+    /*width:12.0em;*/
+    width: 100%;
+}
+
+.ck-button4 label span {
+    text-align:center;
+    display:block;
+}
+
+.ck-button4 label input {
+    display: none;
+}
+
+.ck-button4 input:checked + span {
+    background-color:#CD853F;
 }
